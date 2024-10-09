@@ -18,7 +18,12 @@ void ChessPiece::move(std::string newPosition) {
 
 // Loading texture from file
 bool ChessPiece::loadTexture(const std::string& texturePath) {
-    return pieceTexture.loadFromFile(texturePath);  // Load texture from file
+    if (!pieceTexture.loadFromFile(texturePath)) {
+        MessageBox(nullptr, L"Failed to load piece texture!", L"Error", MB_OK | MB_ICONERROR);  // Debug message
+        return false;
+    }
+    pieceSprite.setTexture(pieceTexture);
+    return true;
 }
 
 // Setting the sprite position for the SFML window

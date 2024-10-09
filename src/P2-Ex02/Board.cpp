@@ -56,7 +56,15 @@ bool Board::movePiece(std::string fromPosition, std::string toPosition) {
 }
 
 void Board::display(sf::RenderWindow& window) const {
-    window.draw(boardSprite);  // Draw the board
+    // Debug: Check texture size to verify it loaded properly
+    sf::Vector2u textureSize = boardTexture.getSize();
+    if (textureSize.x == 0 || textureSize.y == 0) {
+        MessageBoxA(nullptr, "Chessboard texture is not loaded properly!", "Error", MB_OK | MB_ICONERROR);
+        return ;
+    }
+
+    // Draw the board
+    window.draw(boardSprite);
 
     // Draw each piece on the board
     for (int row = 0; row < 8; ++row) {

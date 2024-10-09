@@ -1,92 +1,49 @@
 #include "pch.h"
-#include "main.h"
+#include "Board.h"
 
-//sf::RenderWindow* window;
+// Function to load the chessboard and piece textures
+bool loadTextures(sf::Texture& boardTexture, sf::Sprite& boardSprite) {
+    if (!boardTexture.loadFromFile("../../../Images/chessboard.png")) {
+        MessageBox(nullptr, L"Failed to load chessboard texture!", L"Error", MB_OK | MB_ICONERROR);  // Debug message
+        return false;  // Failed to load chessboard texture
+    }
+    boardSprite.setTexture(boardTexture);  // Set the chessboard sprite
+    return true;
+}
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
-{
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+    // Create an SFML window
+    sf::RenderWindow window(sf::VideoMode(600, 600), "SFML Chess");
 
-    WNDCLASSEXW wcex;
-    wcex.cbSize = sizeof(WNDCLASSEX);
-    wcex.style = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc = WndProc;
-    wcex.cbClsExtra = 0;
-    wcex.cbWndExtra = 0;
-    wcex.hInstance = hInstance;
-    wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_APP));
-    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-    wcex.lpszMenuName = nullptr;
-    wcex.lpszClassName = L"WinAppClass";
-    wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+    // Chessboard textures
+    sf::Texture boardTexture;
+    sf::Sprite boardSprite;
 
-    if (RegisterClassExW(&wcex) == 0)
-        return 0;
+    // Load chessboard texture
+    if (!loadTextures(boardTexture, boardSprite)) {
+        return -1;  // Exit if loading failed
+    }
 
-    HWND hWnd = CreateWindowW(L"WinAppClass", L"Title", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-    if (hWnd == NULL)
-        return 0;
-
-    ShowWindow(hWnd, nCmdShow);
-    UpdateWindow(hWnd);
-
-    sf::RenderWindow window(hWnd);
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
-    MSG msg;
-    while (true) {
-        while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
-            if (msg.message == WM_QUIT) {
-                break;
+    // Main game loop
+    while (window.isOpen()) {
+        // Handle events
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();  // Ensure this closes the window properly
             }
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
         }
 
-        if (msg.message == WM_QUIT) {
-            break;
-        }
-
+        // Clear the window
         window.clear();
-        window.draw(shape);
+
+        // Draw the chessboard
+        window.draw(boardSprite);
+
+        // Display the window
         window.display();
     }
 
-#ifdef _DEBUG
-    _CrtDumpMemoryLeaks();
-#endif
-
-    return (msg.wParam);
-}
-
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    switch (message) {
-    case WM_COMMAND: {
-        int id = LOWORD(wParam);
-        int notif = HIWORD(wParam);
-        return DefWindowProc(hWnd, message, wParam, lParam);
-        break;
-    }
-    case WM_PAINT: {
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hWnd, &ps);
-        EndPaint(hWnd, &ps);
-        break;
-    }
-    case WM_DESTROY: {
-        PostQuitMessage(0);
-        break;
-    }
-    default: {
-        return DefWindowProc(hWnd, message, wParam, lParam);
-        break;
-    }
-    }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "main.h"
-
+#include "Board.h"
 //sf::RenderWindow* window;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -38,20 +38,40 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	sf::RenderWindow window(hWnd);
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
-
+	Board board(8, 8);
+	board.initializeGame();
 	MSG msg;
 	while (window.isOpen()) {
-		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-		{
+		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				// Get mouse position relative to the window
+				sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
+				// Convert mouse position to board coordinates
+				int x = abs( mousePos.x / 64); // Assuming each square is 64x64 pixels
+				int y = abs(mousePos.y / 64);
+
+				// Ensure the coordinates are within the bounds of the board
+				if (x >= 0 && x < 8 && y >= 0 && y < 8) {
+					Piece* piece = board.GetPiece(x, y);  // Get the piece at the clicked position
+					if (piece != nullptr) {
+						// Example move logic: move piece to the next square down (this needs to be replaced with actual logic)
+						std::pair<int, int> targetPosition = { x, y + 1 };  // Move down by one row as an example
+						if (y + 1 < 8) {
+							board.MovePiece(*piece, targetPosition);
+						}
+					}
+				}
+			}
+
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		
 
+		// Update window
 		window.clear();
-		window.draw(shape);
+		board.display(window);
 		window.display();
-
 	}
 
 #ifdef _DEBUG

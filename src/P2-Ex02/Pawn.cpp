@@ -8,13 +8,13 @@ Pawn::Pawn(const std::string& image, std::pair<int, int> position, int player) :
 
 
 bool Pawn::isValidMove(std::pair<int, int> coordinate) const {
-    int currentRow = position.second; // row
-    int currentCol = position.first; // col
+    int currentRow = position.second; // row (y)
+    int currentCol = position.first;  // col (x)
 
-    int targetRow = coordinate.second;
-    int targetCol = coordinate.first;
+    int targetRow = coordinate.second; // target row (y)
+    int targetCol = coordinate.first;  // target col (x)
 
-    int direction = (getPlayer() == 1) ? 1 : -1;
+    int direction = (getPlayer() == 1) ? 1 : -1; // 1 for player 1 moving up (increasing y), -1 for player 2 moving down (decreasing y)
 
     // Moving forward by 1
     if (targetCol == currentCol && targetRow == currentRow + direction) {
@@ -35,4 +35,5 @@ bool Pawn::isValidMove(std::pair<int, int> coordinate) const {
     std::cout << "Invalid move for player " << getPlayer() << " from " << currentRow << "," << currentCol << " to " << targetRow << "," << targetCol << std::endl;
     return false; // Not a valid move
 }
+
 

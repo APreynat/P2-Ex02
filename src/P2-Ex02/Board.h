@@ -10,10 +10,11 @@ public:
 
     bool isOccupied(int col, int row) const;
 
-    std::pair<int, int> coordToIndex(const std::string& coord) const;
-
     bool CanPlay(Piece& piece, std::pair<int, int> target);
     void MovePiece(Piece& piece, std::pair<int, int> target);
+
+    Piece* GetPieceToPlay();
+    void SetPieceToPlay(Piece& piece);
 
     int GetHintNumber();
     void setHintNumber(int value);
@@ -25,4 +26,5 @@ private:
     int hintNumber = 0;
     mutable sf::Texture boardTexture; // Texture for the board
     mutable std::vector<sf::Texture> pieceTextures; // Textures for pieces
+    Piece* PieceToPlay;
 };

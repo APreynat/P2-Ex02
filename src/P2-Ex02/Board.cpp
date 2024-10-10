@@ -79,12 +79,17 @@ void Board::initializeGame() {
     currentPlayer = (rand() % 2) + 1;  // Randomly set to 1 or 2
 }
 
+
 Piece* Board::GetPiece(int col, int row) {
     if (col >= 0 && col < cols && row >= 0 && row < rows) {
         return grid[row][col]; // Notice it's [row][col] because grid is row-major
     }
     return nullptr;
 }
+
+Piece* Board::GetPieceToPlay() { return PieceToPlay; }
+
+void Board::SetPieceToPlay(Piece& piece) { PieceToPlay = &piece; }
 
 int Board::GetCurrentPlayer() const {
     return currentPlayer;
@@ -106,17 +111,17 @@ void Board::setHintNumber(int value) { hintNumber = value; }
 bool Board::CanPlay(Piece& piece, const std::pair<int, int> coord) {
     std::pair<int, int> targetCoordinate = coord;
     std::pair<int, int> currentCoordinate = piece.getPosition();
-    int currentRow = currentCoordinate.first;
-    int currentCol = currentCoordinate.second;
-    int targetRow = targetCoordinate.first;
-    int targetCol = targetCoordinate.second;
+    int currentRow = currentCoordinate.second;
+    int currentCol = currentCoordinate.first;
+    int targetRow = targetCoordinate.second;
+    int targetCol = targetCoordinate.first;
 
     if (!piece.isValidMove(targetCoordinate)) {
         return false;
     }
     if (dynamic_cast<const Pawn*>(&piece)) {
-        int currentRow = piece.getPosition().first;
-        int currentCol = piece.getPosition().second;
+        int currentRow = piece.getPosition().second;
+        int currentCol = piece.getPosition().first;
 
         // Moving forward: must not be blocked
         if (targetCol == currentCol && grid[targetRow][targetCol] != nullptr) {
@@ -161,23 +166,21 @@ void Board::MovePiece(Piece& piece, std::pair<int, int> coord) {
 
     if (CanPlay(piece, coord)) {
         std::pair<int, int> currentCoordinate = piece.getPosition();
-        int currentRow = currentCoordinate.first;
-        int currentCol = currentCoordinate.second;
+        int currentRow = currentCoordinate.second;
+        int currentCol = currentCoordinate.first;
 
         // Update the grid
-        grid[targetCoordinate.first][targetCoordinate.second] = &piece; // Place piece in new position
+        grid[targetCoordinate.second][targetCoordinate.first] = &piece; // Place piece in new position
         grid[currentRow][currentCol] = nullptr; // Clear old position
 
         // Update the piece's position
         piece.setPosition(coord);
 
+        PieceToPlay = nullptr;
         currentPlayer = (currentPlayer == 1) ? 2 : 1; // Switch player
     }
     else {
         std::cout << "Invalid move" << std::endl;
+        PieceToPlay = nullptr;
     }
 }
-
-
-
-

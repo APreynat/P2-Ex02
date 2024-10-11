@@ -2,7 +2,11 @@
 #include "Rook.h"
 
 // Constructor
-Rook::Rook(char color, std::string position) : ChessPiece(color, 'R', position) {}
+Rook::Rook(char color, char symbol, const sf::Texture& texture, std::string position) : ChessPiece(color, 'R', texture, position) {}
+
+void Rook::setTexture(const sf::Texture& texture) {
+    loadSprite(texture);
+}
 
 // Rook's specific movement rules
 bool Rook::isValidMove(std::string newPosition, ChessPiece* grid[8][8]) const {

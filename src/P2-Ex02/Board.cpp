@@ -9,10 +9,6 @@ Board::Board() {
             grid[i][j] = nullptr;
         }
     }
-
-    // Load board texture (chessboard image)
-    boardTexture.loadFromFile("path_to_board_texture.png");
-    boardSprite.setTexture(boardTexture);
 }
 
 Board::~Board() {
@@ -70,8 +66,8 @@ void Board::display(sf::RenderWindow& window) const {
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
             if (grid[row][col]) {
-                float x = col * 100;  // Assume each square is 100x100 pixels
-                float y = row * 100;
+                float x = col * 81;  // Assume each square is 81x81 pixels
+                float y = row * 81;
                 grid[row][col]->setSpritePosition(x, y);
                 grid[row][col]->draw(window);
             }
@@ -88,6 +84,22 @@ bool Board::getPositionIndices(std::string position, int& row, int& col) const {
     return false;
 }
 
-bool Board::loadTextures(const std::string& boardImagePath) {
-    return boardTexture.loadFromFile(boardImagePath);  // Load board texture
+// Load the chessboard texture and any required resources
+bool Board::loadSprite() {
+    // This method should load the texture and return whether it was successful
+    if (!boardTexture.loadFromFile("../../../Images/chessboard.png")) {
+        return false;  // Return false if loading failed
+    }
+    boardSprite.setTexture(boardTexture);  // Set the texture to the sprite
+    return true;  // Return true if loading was successful
+}
+
+// Getter for board texture
+sf::Texture Board::GetTexture() const {
+    return boardTexture;
+}
+
+// Getter for board sprite
+sf::Sprite Board::GetSprite() const {
+    return boardSprite;
 }

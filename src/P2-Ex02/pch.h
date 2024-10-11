@@ -15,5 +15,13 @@
 #include "ChessPiece.h"
 #include <string>
 #include <iostream>
+#include <map>
+
+#include "King.h"
+#include "Queen.h"
+#include "Bishop.h"
+#include "knight.h"
+#include "Rook.h"
+#include "Pawn.h"
 
 using namespace std;

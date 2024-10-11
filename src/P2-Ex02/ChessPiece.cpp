@@ -1,8 +1,10 @@
 #include "pch.h"
+#include "TextureManager.h"
 
 // Constructor
-ChessPiece::ChessPiece(char color, char symbol, std::string position)
-    : color(color), symbol(symbol), position(position), hasMoved(false) {}
+ChessPiece::ChessPiece(char color, char symbol, const sf::Texture& texture, std::string position): color(color), symbol(symbol), position(position), hasMoved(false) {
+    pieceSprite.setTexture(texture);  // Set the shared texture to the sprite
+}
 
 // Getter implementations remain unchanged
 char ChessPiece::getSymbol() const { return symbol; }
@@ -24,6 +26,10 @@ bool ChessPiece::loadTexture(const std::string& texturePath) {
     }
     pieceSprite.setTexture(pieceTexture);
     return true;
+}
+
+void ChessPiece::loadSprite(const sf::Texture& texture) {
+    pieceSprite.setTexture(texture);
 }
 
 // Setting the sprite position for the SFML window

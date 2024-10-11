@@ -2,7 +2,11 @@
 #include "Pawn.h"
 
 // Constructor
-Pawn::Pawn(char color, std::string position) : ChessPiece(color, 'P', position) {}
+Pawn::Pawn(char color, char symbol, const sf::Texture& texture, std::string position) : ChessPiece(color, 'P', texture, position) {}
+
+void Pawn::setTexture(const sf::Texture& texture) {
+    loadSprite(texture); // Call the loadSprite method from ChessPiece
+}
 
 // Pawn's specific movement rules
 bool Pawn::isValidMove(std::string newPosition, ChessPiece* grid[8][8]) const {

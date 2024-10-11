@@ -12,7 +12,7 @@ protected:
     sf::Sprite pieceSprite;    // Sprite for rendering the piece
 
 public:
-    ChessPiece(char color, char symbol, std::string position);
+    ChessPiece(char color, char symbol, const sf::Texture& texture, std::string position);
 
     // Getters
     char getColor() const;
@@ -22,6 +22,8 @@ public:
 
     // Set the piece texture (from an image file)
     bool loadTexture(const std::string& texturePath);
+
+    void loadSprite(const sf::Texture& texture);
 
     // Method to set the position of the sprite on the board
     void setSpritePosition(float x, float y);

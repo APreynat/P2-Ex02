@@ -1,7 +1,11 @@
 #include "pch.h"
 #include "Knight.h"
 
-Knight::Knight(char color, std::string position) : ChessPiece(color, 'N', position) {}
+Knight::Knight(char color, char symbol, const sf::Texture& texture, std::string position) : ChessPiece(color, 'N', texture, position) {}
+
+void Knight::setTexture(const sf::Texture& texture) {
+    loadSprite(texture);
+}
 
 bool Knight::isValidMove(std::string newPosition, ChessPiece* grid[8][8]) const {
     int currentRow = position[1] - '1';

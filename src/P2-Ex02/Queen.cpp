@@ -2,7 +2,11 @@
 #include "Queen.h"
 
 // Constructor
-Queen::Queen(char color, std::string position) : ChessPiece(color, 'Q', position) {}
+Queen::Queen(char color, char symbol, const sf::Texture& texture, std::string position) : ChessPiece(color, 'Q', texture, position) {}
+
+void Queen::setTexture(const sf::Texture& texture) {
+    loadSprite(texture); // Call the loadSprite method from ChessPiece
+}
 
 // Queen's movement combines both rook and bishop logic
 bool Queen::isValidMove(std::string newPosition, ChessPiece* grid[8][8]) const {

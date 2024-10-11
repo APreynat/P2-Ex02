@@ -1,5 +1,4 @@
-#ifndef ROOK_H  // Start of the guard
-#define ROOK_H
+#pragma once
 
 #include "Piece.h"  // Include the Piece header to inherit from it
 #include <string>
@@ -8,11 +7,9 @@
 class Rook : public Piece
 {
 public:
-    Rook(const std::string& image, std::pair<int, int> position, int player);
+    Rook(const std::string& image, const char symbol, std::pair<int, int> position, int player);
     virtual bool isValidMove(std::pair<int, int> coordinate) const override;
 
 private:
 
 };
-
-#endif // ROOK_H  // End of the guard

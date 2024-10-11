@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Bishop.h"
 
-Bishop::Bishop(const std::string& image, std::pair<int, int> position, int player) : Piece(image, position, player) {
+Bishop::Bishop(const std::string& image, const char symbol, std::pair<int, int> position, int player) : Piece(image, symbol, position, player) {
 
 }
 

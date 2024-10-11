@@ -1,30 +1,40 @@
+#pragma once
 #include "pch.h"
 
 class Board {
 public:
+#ifdef SFML
+    Board(int rows, int cols, sf::RenderWindow& window);
+#elif defined CONSOLE
     Board(int rows, int cols);
-    void display(sf::RenderWindow& window) const;
+#endif // SFML
+
+    void display() const;
     void initializeGame();
     Piece* GetPiece(int col, int row);
+    Piece* GetPiece(std::pair<int, int> coord);
+    Piece* GetPieceToPlay();
     int GetCurrentPlayer() const;
+    sf::RenderWindow* getBoardWindow();
 
     bool isOccupied(int col, int row) const;
 
     bool CanPlay(Piece& piece, std::pair<int, int> target);
     void MovePiece(Piece& piece, std::pair<int, int> target);
 
-    Piece* GetPieceToPlay();
+    void setBoardWindow(sf::RenderWindow& drawWindow);
     void SetPieceToPlay(Piece& piece);
-
-    int GetHintNumber();
-    void setHintNumber(int value);
 
 private:
     int rows, cols;
     std::vector<std::vector<Piece*>> grid;
     int currentPlayer;
-    int hintNumber = 0;
+    Piece* PieceToPlay;
+#ifdef SFML
     mutable sf::Texture boardTexture; // Texture for the board
     mutable std::vector<sf::Texture> pieceTextures; // Textures for pieces
-    Piece* PieceToPlay;
+    sf::RenderWindow* window;
+#endif // SFML
+
+    
 };

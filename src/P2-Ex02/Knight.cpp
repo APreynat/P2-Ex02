@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Knight.h"
 
-Knight::Knight(const std::string& image, std::pair<int, int> position, int player) : Piece(image, position, player) {}
+Knight::Knight(const std::string& image, const char symbol, std::pair<int, int> position, int player) : Piece(image, symbol, position, player) {}
 
 
 bool Knight::isValidMove(std::pair<int, int> coordinate) const {

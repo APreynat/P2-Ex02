@@ -1,9 +1,6 @@
 // SFMLUtility.h
 
-#ifndef SFMLUTILITY_H
-#define SFMLUTILITY_H
-
-#include "pch.h"
+#pragma once
 
 class SFMLUtility {
 public:
@@ -27,4 +24,3 @@ public:
     sf::Vector2i getMousePosition(sf::RenderWindow& window);
 };
 
-#endif // SFMLUTILITY_H

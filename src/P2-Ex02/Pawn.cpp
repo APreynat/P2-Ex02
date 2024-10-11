@@ -2,7 +2,7 @@
 #include "Pawn.h"
 
 
-Pawn::Pawn(const std::string& image, std::pair<int, int> position, int player) : Piece(image, position, player) {
+Pawn::Pawn(const std::string& image, const char symbol, std::pair<int, int> position, int player) : Piece(image, symbol, position, player) {
 
 }
 

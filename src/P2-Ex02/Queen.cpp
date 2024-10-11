@@ -2,7 +2,7 @@
 #include "Queen.h"
 
 
-Queen::Queen(const std::string& image, std::pair<int, int> position, int player) : Piece(image, position, player) {
+Queen::Queen(const std::string& image, const char symbol, std::pair<int, int> position, int player) : Piece(image, symbol, position, player) {
 
 }
 

@@ -1,11 +1,15 @@
 #include "pch.h"
 #include "Piece.h"
 
-Piece::Piece(const std::string& symbol, std::pair<int, int> position, int player)
-    : symbol(symbol), position(position), player(player) {
+Piece::Piece(const std::string& image,const char symbol, std::pair<int, int> position, int player)
+    : image(image), symbol(symbol), position(position), player(player) {
 }
 
 std::string Piece::GetImage() const {
+    return image;
+}
+
+char Piece::getSymbol() const {
     return symbol;
 }
 

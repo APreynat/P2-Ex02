@@ -14,7 +14,7 @@ bool Pawn::isValidMove(std::pair<int, int> coordinate) const {
     int targetRow = coordinate.second; // target row (y)
     int targetCol = coordinate.first;  // target col (x)
 
-    int direction = (getPlayer() == 1) ? 1 : -1; // 1 for player 1 moving up (increasing y), -1 for player 2 moving down (decreasing y)
+    int direction = (getPlayer() == 1) ? 1 : -1;
 
     // Moving forward by 1
     if (targetCol == currentCol && targetRow == currentRow + direction) {
